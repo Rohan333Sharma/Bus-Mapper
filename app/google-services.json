@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "783450397775",
+    "project_id": "bus-mapper-723",
+    "storage_bucket": "bus-mapper-723.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783450397775:android:d13d2e84e2fc3ac3e09e3a",
+        "android_client_info": {
+          "package_name": "com.example.busmapper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783450397775-s8uee09f7gqb1a35btmjbi75s3p1bsv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDbCRySgfWsPKQOA65IL6Va4g4wFegoFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783450397775-s8uee09f7gqb1a35btmjbi75s3p1bsv6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

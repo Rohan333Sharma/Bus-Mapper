@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="black_500">#FF323232</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="turquoise_blue">#FF5FEBE7</color>
+    <color name="turquoise_blue_500">#FF4BBCB8</color>
+    <color name="turquoise_blue_300">#FF54D3CF</color>
+    <color name="yellow">#FFFFB640</color>
+    <color name="gray">#FF747474</color>
+    <color name="gray_700">#FF999999</color>
+    <color name="gray_400">#FFBEBEBE</color>
+    <color name="gray_300">#FFE5E5EB</color>
+    <color name="gray_200">#FFF2F5FA</color>
+</resources>
