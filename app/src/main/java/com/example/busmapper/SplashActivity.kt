@@ -19,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
         logoTextView.startAnimation(animation)
 
         val handler = Handler(Looper.myLooper()!!)
-        handler.postDelayed(Runnable {
+        handler.postDelayed({
             val intent = Intent(this,HomeActivity::class.java)
             startActivity(intent)
             finish()

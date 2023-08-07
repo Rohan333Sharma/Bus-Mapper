@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Bus Mapper</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="search_by_bus_number">Search by bus number…</string>
@@ -11,5 +10,6 @@
     <string name="to">To</string>
     <string name="from">From</string>
     <string name="api_key">AIzaSyCMLNsEpk0vX2-fdNcswIoajkVUNKf_jEk</string>
-    <string name="sample_bus_number">DL04 AA 1234</string>
+    <string name="sample_bus_number">DL04AA1234</string>
+    <string name="title_activity_bus_location">BusLocationActivity</string>
 </resources>
