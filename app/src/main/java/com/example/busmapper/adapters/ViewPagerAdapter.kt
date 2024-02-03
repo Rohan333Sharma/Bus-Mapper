@@ -1,10 +1,11 @@
-package com.example.busmapper
+package com.example.busmapper.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.busmapper.BusStopFragment
+import com.example.busmapper.HomeFragment
+import com.example.busmapper.MoreFragment
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {

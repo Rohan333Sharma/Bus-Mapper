@@ -8,8 +8,9 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busmapper.adapters.BusNumberRecyclerViewAdapter
+import com.example.busmapper.models.BusModel
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Locale
 
 class BusSearchByNumberActivity : AppCompatActivity() {
 
@@ -25,6 +26,8 @@ class BusSearchByNumberActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        searchEditText.requestFocus()
+
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -36,12 +39,12 @@ class BusSearchByNumberActivity : AppCompatActivity() {
                     val busNumberArray = ArrayList<BusModel>()
                     for (bus in buses)
                     {
-                        if(bus.id.contains(s.toString(),true))
+                        if(bus.id.contains(s.toString(),true) && s.toString() != "")
                         {
                             busNumberArray.add(BusModel(bus.id,bus.get("path").toString()))
                         }
                     }
-                    recyclerView.adapter = RecyclerViewAdaptor(context,busNumberArray)
+                    recyclerView.adapter = BusNumberRecyclerViewAdapter(context,busNumberArray)
                 }
             }
 

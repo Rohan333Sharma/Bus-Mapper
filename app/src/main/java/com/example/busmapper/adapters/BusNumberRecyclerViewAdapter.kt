@@ -1,4 +1,4 @@
-package com.example.busmapper
+package com.example.busmapper.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busmapper.BusDetailsActivity
+import com.example.busmapper.BusLocationActivity
+import com.example.busmapper.models.BusModel
+import com.example.busmapper.R
 
-class RecyclerViewAdaptor(val context: Context, val arrayList: ArrayList<BusModel>) : RecyclerView.Adapter<RecyclerViewAdaptor.ViewHolder>() {
+class BusNumberRecyclerViewAdapter(val context: Context, private val arrayList: ArrayList<BusModel>) : RecyclerView.Adapter<BusNumberRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val busNumberTextView: TextView = itemView.findViewById(R.id.bus_number_textView)
@@ -35,7 +39,7 @@ class RecyclerViewAdaptor(val context: Context, val arrayList: ArrayList<BusMode
         holder.busPathTextView.text = arrayList[position].busPath
 
         holder.busNumberTextView.setOnClickListener {
-            val intent = Intent(context,BusDetailsActivity::class.java)
+            val intent = Intent(context, BusDetailsActivity::class.java)
             context.startActivity(intent)
         }
         holder.busPathTextView.setOnClickListener {
@@ -43,7 +47,7 @@ class RecyclerViewAdaptor(val context: Context, val arrayList: ArrayList<BusMode
         }
 
         holder.busCurrentLocationImageButton.setOnClickListener {
-            val intent = Intent(context,BusLocationActivity::class.java)
+            val intent = Intent(context, BusLocationActivity::class.java)
             intent.putExtra("busId", arrayList[position].busNumber)
             context.startActivity(intent)
         }

@@ -9,7 +9,11 @@
     <string name="search_buses">Search Buses</string>
     <string name="to">To</string>
     <string name="from">From</string>
-    <string name="api_key">AIzaSyCMLNsEpk0vX2-fdNcswIoajkVUNKf_jEk</string>
+    <string name="api_key">AIzaSyBqw0mtj7mJILvVqKDSfUlwLn0TmrXOs2w</string>
     <string name="sample_bus_number">DL04AA1234</string>
+    <string name="where_from">Where From?</string>
+    <string name="where_to">Where To?</string>
     <string name="title_activity_bus_location">BusLocationActivity</string>
+    <string name="signup_login">SignUp / Login</string>
+    <string name="place_hint">Delhi, Bareilly</string>
 </resources>

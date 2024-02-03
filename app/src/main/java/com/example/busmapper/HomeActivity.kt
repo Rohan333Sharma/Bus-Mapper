@@ -1,17 +1,22 @@
 package com.example.busmapper
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
+import com.example.busmapper.adapters.ViewPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
+
+    lateinit var viewPager : ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        viewPager = findViewById(R.id.viewPager)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         val viewPagerAdapter = ViewPagerAdapter(this)
 
@@ -72,5 +77,26 @@ class HomeActivity : AppCompatActivity() {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION))
 
+        onBackPressedDispatcher.addCallback(this,onBackPressedCallback)
+
     }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+
+        override fun handleOnBackPressed() {
+
+            val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+            if(drawerLayout.isOpen)
+            {
+                drawerLayout.close()
+            }
+            else
+            {
+                finish()
+            }
+
+        }
+
+    }
+
 }
