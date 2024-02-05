@@ -2,12 +2,9 @@ package com.example.busmapper
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +13,6 @@ import android.widget.CalendarView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -32,10 +26,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.SphericalUtil
@@ -43,22 +33,21 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-
 class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mapView : MapView
-    private var MAPVIEW_BUNDLE_KEY : String= "MapViewBundleKey";
-    lateinit var fusedLocationProviderClient : FusedLocationProviderClient
-    var longitude : Double = 0.0
-    var latitude : Double = 0.0
+    private val mapViewBundleKey : String= "MapViewBundleKey"
+    private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
+    private var longitude : Double = 0.0
+    private var latitude : Double = 0.0
     private lateinit var currentLocation : LatLng
-    lateinit var fireStore : FirebaseFirestore
-    lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var fireStore : FirebaseFirestore
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var nearbyBuses : ArrayList<LatLng>
     private lateinit var fromTextView : TextView
     private lateinit var toTextView : TextView
     private var placeNameForTextview = ""
-    lateinit var intent: Intent
+    private lateinit var intent: Intent
     private val startActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if (it.resultCode == Activity.RESULT_OK)
         {
@@ -77,6 +66,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         val fragmentView = inflater.inflate(R.layout.fragment_home, container, false)
         val searchTextView = fragmentView.findViewById<TextView>(R.id.search_textView)
+        val fromHintTextView = fragmentView.findViewById<TextView>(R.id.from_hint_textView)
+        val toHintTextView = fragmentView.findViewById<TextView>(R.id.to_hint_textView)
         val calendarHintTextView = fragmentView.findViewById<TextView>(R.id.calender_hint_textView)
         val calendarTextView = fragmentView.findViewById<TextView>(R.id.calender_textView)
         val swapImage = fragmentView.findViewById<ImageView>(R.id.swap_image)
@@ -113,11 +104,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             Thread.sleep(50)
             placeNameForTextview = "from"
             startActivityResult.launch(Intent(context,PlaceSearchActivity::class.java))
+            fromHintTextView.text = resources.getString(R.string.from)
         }
         toTextView.setOnClickListener {
             Thread.sleep(50)
             placeNameForTextview = "to"
             startActivityResult.launch(Intent(context,PlaceSearchActivity::class.java))
+            toHintTextView.text = resources.getString(R.string.to)
         }
         calendarTextView.setOnClickListener {
             if(calendarView.visibility == View.GONE)
@@ -129,7 +122,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 calendarView.visibility = View.GONE
             }
 
-            calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
                 calendar.set(year,month,dayOfMonth)
                 val time = simpleDateFormat.format(calendar.time)
                 calendarTextView.text = time
@@ -148,15 +141,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
         searchBusButton.setOnClickListener {
             intent = Intent(requireActivity(),BusesSearchByRouteActivity::class.java)
+            intent.putExtra("from",fromTextView.text.toString())
+            intent.putExtra("to",toTextView.text.toString())
             Thread.sleep(50)
             startActivity(intent)
         }
 
         var mapViewBundle: Bundle? = null
         if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
+            mapViewBundle = savedInstanceState.getBundle(mapViewBundleKey)
         }
-        mapView.onCreate(mapViewBundle);
+        mapView.onCreate(mapViewBundle)
 
 
         // Inflate the layout for this fragment
@@ -217,10 +212,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        var mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY)
+        var mapViewBundle = outState.getBundle(mapViewBundleKey)
         if (mapViewBundle == null) {
             mapViewBundle = Bundle()
-            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle)
+            outState.putBundle(mapViewBundleKey, mapViewBundle)
         }
         mapView.onSaveInstanceState(mapViewBundle)
     }

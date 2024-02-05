@@ -41,7 +41,7 @@ class BusSearchByNumberActivity : AppCompatActivity() {
                     {
                         if(bus.id.contains(s.toString(),true) && s.toString() != "")
                         {
-                            busNumberArray.add(BusModel(bus.id,bus.get("path").toString()))
+                            busNumberArray.add(BusModel(bus.id,resources.getString(R.string.bus_path,bus.get("from"),bus.get("to"))))
                         }
                     }
                     recyclerView.adapter = BusNumberRecyclerViewAdapter(context,busNumberArray)
