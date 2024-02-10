@@ -1,4 +1,4 @@
 package com.example.busmapper.models
 
-class BusesOnRouteModel(var placeName : String, var stateName : String) {
+class BusesOnRouteModel(var boardingTime : String,var droppingTime : String, var price : String) {
 }

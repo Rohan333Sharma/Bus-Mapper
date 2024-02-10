@@ -3,6 +3,7 @@ package com.example.busmapper.adapters
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,9 @@ import com.example.busmapper.models.PlaceModel
 class BusesOnRouteRecyclerViewAdapter(val context: Context, val activity: Activity, private val arrayList: ArrayList<BusesOnRouteModel>) : RecyclerView.Adapter<BusesOnRouteRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val placeNameTextView: TextView = itemView.findViewById(R.id.place_name_textView)
-        val stateNameTextView: TextView = itemView.findViewById(R.id.state_name_textView)
+        val timingsTextView: TextView = itemView.findViewById(R.id.timings_textView)
+        val durationTextView: TextView = itemView.findViewById(R.id.duration_textView)
+        val priceTextView: TextView = itemView.findViewById(R.id.price_textView)
 
     }
 
@@ -28,17 +30,18 @@ class BusesOnRouteRecyclerViewAdapter(val context: Context, val activity: Activi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.placeNameTextView.text = arrayList[position].placeName
-        holder.stateNameTextView.text = arrayList[position].stateName
+        holder.timingsTextView.text = context.resources.getString(R.string.from_to,arrayList[position].boardingTime, arrayList[position].droppingTime)
+        holder.priceTextView.text = context.resources.getString(R.string.rupees,arrayList[position].price)
+        holder.durationTextView.text = (arrayList[position].droppingTime.split(":")[0].toInt() - arrayList[position].boardingTime.split(":")[0].toInt()).toString()
 
-        holder.placeNameTextView.setOnClickListener {
-            val intent = Intent()
-            intent.putExtra("name",arrayList[position].placeName)
-            activity.setResult(Activity.RESULT_OK,intent)
-            activity.finish()
+        holder.timingsTextView.setOnClickListener {
+//            val intent = Intent()
+//            intent.putExtra("name",arrayList[position].placeName)
+//            activity.setResult(Activity.RESULT_OK,intent)
+//            activity.finish()
         }
-        holder.stateNameTextView.setOnClickListener {
-            holder.placeNameTextView.callOnClick()
+        holder.priceTextView.setOnClickListener {
+            holder.timingsTextView.callOnClick()
         }
     }
 

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -143,6 +144,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             intent = Intent(requireActivity(),BusesSearchByRouteActivity::class.java)
             intent.putExtra("from",fromTextView.text.toString())
             intent.putExtra("to",toTextView.text.toString())
+            intent.putExtra("date",calendarTextView.text.toString().split(", ")[1])
             Thread.sleep(50)
             startActivity(intent)
         }
@@ -195,6 +197,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("PotentialBehaviorOverride")
     override fun onMapReady(map: GoogleMap) {
+        Log.d("Tag123","omp")
         map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title("You"))
         currentLocation = LatLng(latitude,longitude)
         getNearbyBuses(map)
