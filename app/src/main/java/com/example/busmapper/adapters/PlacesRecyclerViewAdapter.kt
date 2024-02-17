@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.busmapper.PlaceSearchActivity
 import com.example.busmapper.R
 import com.example.busmapper.models.PlaceModel
 
-class PlacesRecyclerViewAdapter(val context: Context, val activity: Activity, private val arrayList: ArrayList<PlaceModel>) : RecyclerView.Adapter<PlacesRecyclerViewAdapter.ViewHolder>() {
+class PlacesRecyclerViewAdapter(val context: Context, private val activity: Activity, private val arrayList: ArrayList<PlaceModel>) : RecyclerView.Adapter<PlacesRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val placeNameTextView: TextView = itemView.findViewById(R.id.place_name_textView)

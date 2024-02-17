@@ -40,6 +40,7 @@ class BusNumberRecyclerViewAdapter(val context: Context, private val arrayList: 
 
         holder.busNumberTextView.setOnClickListener {
             val intent = Intent(context, BusDetailsActivity::class.java)
+            intent.putExtra("busId",arrayList[position].busNumber)
             context.startActivity(intent)
         }
         holder.busPathTextView.setOnClickListener {

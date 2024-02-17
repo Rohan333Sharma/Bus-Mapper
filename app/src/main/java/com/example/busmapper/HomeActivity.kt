@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var viewPager : ViewPager2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -22,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.viewPager)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         val viewPagerAdapter = ViewPagerAdapter(this)
+
 
         viewPager.isUserInputEnabled = false
         bottomNavigationView.menu.getItem(1).isChecked = true
@@ -31,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
             viewPager.adapter = viewPagerAdapter
             viewPager.setCurrentItem(1,false)
         }
+
         else
         {
             val locationPermissionRequest = registerForActivityResult(ActivityResultContracts.RequestPermission()){

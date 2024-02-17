@@ -1,22 +1,15 @@
 package com.example.busmapper
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.busmapper.adapters.BusNumberRecyclerViewAdapter
 import com.example.busmapper.adapters.BusesOnRouteRecyclerViewAdapter
-import com.example.busmapper.models.BusModel
 import com.example.busmapper.models.BusesOnRouteModel
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.concurrent.Executors
 
 class BusesSearchByRouteActivity : AppCompatActivity() {
 
@@ -56,7 +49,7 @@ class BusesSearchByRouteActivity : AppCompatActivity() {
                 if (bus.get("from")==intent.getStringExtra("from") && bus.get("to")==intent.getStringExtra("to"))
                 {
                     totalBuses += 1
-                    busesOnRouteArray.add(BusesOnRouteModel(bus.getString("boarding_time").toString(),bus.getString("dropping_time").toString(),bus.getString("price").toString()))
+                    busesOnRouteArray.add(BusesOnRouteModel(bus.id, bus.getString("boarding_time").toString(),bus.getString("dropping_time").toString(),bus.getString("price").toString(),bus.getString("company").toString(),bus.getString("seat_type").toString()))
                 }
             }
             if(totalBuses>1){
@@ -65,7 +58,7 @@ class BusesSearchByRouteActivity : AppCompatActivity() {
             else{
                 totalBusesTextView.text = resources.getString(R.string.total_buses,totalBuses,"Bus")
             }
-            recyclerView.adapter = BusesOnRouteRecyclerViewAdapter(context,this, busesOnRouteArray)
+            recyclerView.adapter = BusesOnRouteRecyclerViewAdapter(context, busesOnRouteArray)
             frameLayout.visibility = View.GONE
         }
     }

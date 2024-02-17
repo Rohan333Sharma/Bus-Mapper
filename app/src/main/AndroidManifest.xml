@@ -30,7 +30,8 @@
             android:exported="false" />
         <activity
             android:name=".NearbyBusActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="NearbyBusActivity"/>
         <activity
             android:name=".PlaceSearchActivity"
             android:exported="false" />

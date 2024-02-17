@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:orientation="horizontal"
     android:elevation="4dp"
     android:background="@drawable/rounded_corner_solid_white">
@@ -46,12 +46,35 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:textColor="@color/gray"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/linear"
         app:layout_constraintTop_toBottomOf="@id/linear"
         android:id="@+id/duration_textView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/linear"
+        app:layout_constraintTop_toBottomOf="@id/duration_textView"
+        android:layout_marginTop="12dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:id="@+id/company_name_textView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/linear"
+        app:layout_constraintTop_toBottomOf="@id/company_name_textView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/seat_types_textView"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,7 +30,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.maps.android.SphericalUtil
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -175,21 +182,25 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun getNearbyBuses(map : GoogleMap) {
-        fireStore.collection("Bus_Location").get().addOnCompleteListener {
-            if(it.isSuccessful)
-            {
-                val buses = it.result.documents
-                val icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_bus)
-                for (bus in buses)
-                {
-                    val lat = bus.getDouble("latitude")
-                    val lng = bus.getDouble("longitude")
-                    val busLatLng = LatLng(lat!!,lng!!)
-                    val distance = SphericalUtil.computeDistanceBetween(currentLocation,busLatLng)
-                    if(distance<2000.0)
-                    {
-                        map.addMarker(MarkerOptions().position(busLatLng).icon(icon))
+
+        val firebase = Firebase.database
+        val icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_bus)
+
+        fireStore.collection("Buses").get().addOnCompleteListener { its ->
+            if (its.isSuccessful) {
+                val buses = its.result.documents
+                for (bus in buses) {
+                    val firebaseReference = firebase.getReference(bus.id)
+                    firebaseReference.get().addOnSuccessListener {
+                        val lat = it.child("latitude").value.toString().toDouble()
+                        val lng = it.child("longitude").value.toString().toDouble()
+                        val busCurrentLocation = LatLng(lat, lng)
+                        val distance = SphericalUtil.computeDistanceBetween(currentLocation, busCurrentLocation)
+                        if (distance < 5000.0) {
+                            map.addMarker(MarkerOptions().position(busCurrentLocation).icon(icon))
+                        }
                     }
+
                 }
             }
         }
@@ -197,7 +208,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("PotentialBehaviorOverride")
     override fun onMapReady(map: GoogleMap) {
-        Log.d("Tag123","omp")
         map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title("You"))
         currentLocation = LatLng(latitude,longitude)
         getNearbyBuses(map)

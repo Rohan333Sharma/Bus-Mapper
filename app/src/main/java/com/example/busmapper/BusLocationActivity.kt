@@ -28,7 +28,6 @@ class BusLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityBusLocationBinding
     private  lateinit var fireStore : FirebaseFirestore
     private  lateinit var firebase : FirebaseDatabase
-    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +39,7 @@ class BusLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         firebase = Firebase.database
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.bus_location_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
