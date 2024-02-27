@@ -7,7 +7,7 @@
     tools:context=".BusStopFragment">
 
     <EditText
-        android:id="@+id/search_editText"
+        android:id="@+id/bus_stop_search_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -21,6 +21,17 @@
         android:textSize="15sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="20dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="350dp"
+        android:elevation="3dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/bus_stop_search_editText"
+        app:layout_constraintEnd_toEndOf="@id/bus_stop_search_editText"
+        app:layout_constraintTop_toBottomOf="@id/bus_stop_search_editText"
+        android:layout_marginTop="5dp"
+        android:id="@+id/stop_list_recyclerView"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bus_stop_map"
