@@ -28,6 +28,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -208,6 +209,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("PotentialBehaviorOverride")
     override fun onMapReady(map: GoogleMap) {
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
         map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title("You"))
         currentLocation = LatLng(latitude,longitude)
         getNearbyBuses(map)

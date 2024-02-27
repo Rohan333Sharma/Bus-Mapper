@@ -28,5 +28,6 @@
     <string name="bus_amenities">Bus Amenities</string>
     <string name="bus_route">Bus Route</string>
     <string name="bus_location">Bus Location</string>
+    <string name="sample_bus_stop">Bareilly, DD Puram</string>
 
 </resources>

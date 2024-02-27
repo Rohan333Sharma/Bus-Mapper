@@ -1,12 +1,10 @@
 package com.example.busmapper
 
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.busmapper.databinding.ActivityBusLocationBinding
+import com.example.busmapper.databinding.ActivityNearbyBusBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -15,6 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.DataSnapshot
@@ -28,56 +27,80 @@ import com.google.maps.android.SphericalUtil
 
 class NearbyBusActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap: GoogleMap
-    private lateinit var binding: ActivityBusLocationBinding
+    private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
+    private lateinit var binding: ActivityNearbyBusBinding
     private  lateinit var fireStore : FirebaseFirestore
     private  lateinit var firebase : FirebaseDatabase
+    private lateinit var currentLocation : LatLng
+    private var latitude = 0.0
+    private var longitude = 0.0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityBusLocationBinding.inflate(layoutInflater)
+        binding = ActivityNearbyBusBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         fireStore = FirebaseFirestore.getInstance()
         firebase = Firebase.database
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-    }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        val busId = intent.getStringExtra("busId").toString()
-
-        val firebaseReference = firebase.getReference(busId)
-
-        firebaseReference.get().addOnSuccessListener {
-            val lat = it.child("latitude").value.toString().toDouble()
-            val lng = it.child("longitude").value.toString().toDouble()
-            val busCurrentLocation = LatLng(lat, lng)
-            val height = 130
-            val width = 130
-            val b = BitmapFactory.decodeResource(resources, R.drawable.icon_bus_3d)
-            val smallMarker = Bitmap.createScaledBitmap(b, width, height, false)
-            val icon = BitmapDescriptorFactory.fromBitmap(smallMarker)
-            val marker = mMap.addMarker(MarkerOptions().position(busCurrentLocation).title(busId).icon(icon))!!
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(busCurrentLocation, 16f))
-
-            firebaseReference.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    changeLocation(busId,marker)
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-
-            })
+        if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)
+        {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+                val location = it
+                longitude = location.longitude
+                latitude = location.latitude
+                mapFragment.getMapAsync(this)
+            }
         }
     }
+
+    private fun getNearbyBuses(map : GoogleMap) {
+
+        val icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_bus)
+
+        fireStore.collection("Buses").get().addOnCompleteListener { its ->
+            if (its.isSuccessful) {
+                val buses = its.result.documents
+                for (bus in buses) {
+                    val firebaseReference = firebase.getReference(bus.id)
+                    firebaseReference.get().addOnSuccessListener {
+                        val lat = it.child("latitude").value.toString().toDouble()
+                        val lng = it.child("longitude").value.toString().toDouble()
+                        val busCurrentLocation = LatLng(lat, lng)
+                        val distance = SphericalUtil.computeDistanceBetween(currentLocation, busCurrentLocation)
+                        if (distance < 8000.0) {
+                            val marker = map.addMarker(MarkerOptions().position(busCurrentLocation).title(bus.id).snippet(resources.getString(R.string.bus_path,bus.getString("from"),bus.getString("to"))).icon(icon))!!
+                            firebaseReference.addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+
+                                    changeLocation(bus.id,marker)
+
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                }
+
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+        map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title("You"))
+        currentLocation = LatLng(latitude,longitude)
+        getNearbyBuses(map)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,14.5f))
+    }
+
     private fun changeLocation(busId : String, marker : Marker) {
 
         firebase.getReference(busId).get().addOnSuccessListener {
@@ -86,9 +109,8 @@ class NearbyBusActivity : AppCompatActivity(), OnMapReadyCallback {
             val lng = it.child("longitude").value.toString().toDouble()
             val busCurrentLocation = LatLng(lat, lng)
             marker.position = busCurrentLocation
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(busCurrentLocation,16f))
 
         }
-
     }
+
 }

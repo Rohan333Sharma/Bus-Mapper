@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.busmapper.databinding.ActivityBusLocationBinding
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -44,6 +45,7 @@ class BusLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
         mMap = googleMap
         val busId = intent.getStringExtra("busId").toString()
 
