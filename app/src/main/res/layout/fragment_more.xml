@@ -1,14 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MoreFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:text="@string/more"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_back_arrow"
+        android:drawablePadding="30dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:id="@+id/title_textView"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title_textView"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="@string/help"
+        app:drawableStartCompat="@drawable/ic_help"
+        android:drawablePadding="15dp"
+        android:id="@+id/help_textview"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_700"
+        app:layout_constraintTop_toBottomOf="@id/help_textview"
+        android:id="@+id/line1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/line1"
+        android:textSize="18sp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="@string/feedback"
+        app:drawableStartCompat="@drawable/ic_feedback"
+        android:drawablePadding="15dp"
+        android:id="@+id/feedback_textview"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_700"
+        app:layout_constraintTop_toBottomOf="@id/feedback_textview"
+        android:id="@+id/line2"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/line2"
+        android:textSize="18sp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="@string/sos"
+        app:drawableStartCompat="@drawable/ic_sos"
+        android:drawablePadding="15dp"
+        android:id="@+id/sos_textview"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_700"
+        app:layout_constraintTop_toBottomOf="@id/sos_textview"
+        android:id="@+id/line3"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/line3"
+        android:textSize="18sp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="@string/share"
+        app:drawableStartCompat="@drawable/ic_share"
+        android:drawablePadding="15dp"
+        android:id="@+id/share_textview"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_700"
+        app:layout_constraintTop_toBottomOf="@id/share_textview"
+        android:id="@+id/line4"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/line4"
+        android:textSize="18sp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="@string/change_language"
+        app:drawableStartCompat="@drawable/ic_change_language"
+        android:drawablePadding="15dp"
+        android:id="@+id/change_language_textview"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_700"
+        app:layout_constraintTop_toBottomOf="@id/change_language_textview"
+        android:id="@+id/line5"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line5"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

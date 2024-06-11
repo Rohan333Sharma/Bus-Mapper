@@ -174,7 +174,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         if(ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
         {
             fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-                val location = it
+                val location = it!!
                 longitude = location.longitude
                 latitude = location.latitude
                 mapView.getMapAsync(this)
